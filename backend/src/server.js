@@ -9,6 +9,10 @@ const taskRoutes = require("./routes/taskRoutes");
 const app = express();
 
 // app.use(cors());
+app.use(cors({
+  origin: "https://team-task-manager-15luht36t-deepaktyagi57731-6701s-projects.vercel.app", 
+  credentials: true
+}));
 app.use(express.json());
 
 // Routes
@@ -22,7 +26,3 @@ app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT} (Bound to 0.0.0.0)`);
 });
 
-app.use(cors({
-  origin: "https://team-task-manager-15luht36t-deepaktyagi57731-6701s-projects.vercel.app", 
-  credentials: true
-}));
