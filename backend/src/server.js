@@ -8,9 +8,8 @@ const taskRoutes = require("./routes/taskRoutes");
 
 const app = express();
 
-// app.use(cors());
 app.use(cors({
-  origin: "https://team-task-manager-15luht36t-deepaktyagi57731-6701s-projects.vercel.app", 
+  origin: process.env.FRONTEND_URL || "http://localhost:5173",
   credentials: true
 }));
 app.use(express.json());

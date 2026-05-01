@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { useParams } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { Plus, Trash2, Calendar } from 'lucide-react';
@@ -27,7 +27,7 @@ const ProjectDetail = () => {
 
   const fetchProject = async () => {
     try {
-      const res = await axios.get(`http://127.0.0.1:5000/api/projects/${id}`);
+      const res = await api.get(`/api/projects/${id}`);
       setProject(res.data);
     } catch (err) {
       console.error(err);
@@ -38,7 +38,7 @@ const ProjectDetail = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get('http://127.0.0.1:5000/api/auth/users');
+      const res = await api.get('/api/auth/users');
       setUsers(res.data);
     } catch (err) {
       console.error(err);
@@ -48,7 +48,7 @@ const ProjectDetail = () => {
   const handleCreateTask = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`http://127.0.0.1:5000/api/projects/${id}/tasks`, {
+      const res = await api.post(`/api/projects/${id}/tasks`, {
         title,
         description,
         assignedToId: assignedToId || null,
@@ -68,7 +68,7 @@ const ProjectDetail = () => {
 
   const handleUpdateStatus = async (taskId, newStatus) => {
     try {
-      await axios.patch(`http://127.0.0.1:5000/api/tasks/${taskId}`, { status: newStatus });
+      await api.patch(`/api/tasks/${taskId}`, { status: newStatus });
       fetchProject();
     } catch (err) {
       console.error(err);
@@ -79,7 +79,7 @@ const ProjectDetail = () => {
   const handleDeleteTask = async (taskId) => {
     if (!window.confirm('Are you sure you want to delete this task?')) return;
     try {
-      await axios.delete(`http://127.0.0.1:5000/api/tasks/${taskId}`);
+      await api.delete(`/api/tasks/${taskId}`);
       fetchProject();
     } catch (err) {
       console.error(err);
@@ -89,7 +89,7 @@ const ProjectDetail = () => {
   const handleDeleteProject = async () => {
     if (!window.confirm('Are you sure you want to delete this ENTIRE project? This cannot be undone.')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/projects/${id}`);
+      await api.delete(`/api/projects/${id}`);
       window.location.href = '/projects';
     } catch (err) {
       console.error(err);

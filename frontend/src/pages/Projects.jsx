@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { AuthContext } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { FolderPlus, ChevronRight, Trash2 } from 'lucide-react';
@@ -21,7 +21,7 @@ const Projects = () => {
 
   const fetchProjects = async () => {
     try {
-      const res = await axios.get('http://127.0.0.1:5000/api/projects');
+      const res = await api.get('/api/projects');
       setProjects(res.data);
     } catch (err) {
       console.error(err);
@@ -33,7 +33,7 @@ const Projects = () => {
   const handleCreateProject = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://127.0.0.1:5000/api/projects', { name, description });
+      const res = await api.post('/api/projects', { name, description });
       setProjects([res.data, ...projects]);
       setShowModal(false);
       setName('');
@@ -46,7 +46,7 @@ const Projects = () => {
   const handleDeleteProject = async (projectId) => {
     if (!window.confirm('Are you sure you want to delete this project? All associated tasks will be removed.')) return;
     try {
-      await axios.delete(`http://127.0.0.1:5000/api/projects/${projectId}`);
+      await api.delete(`/api/projects/${projectId}`);
       setProjects(projects.filter(p => p.id !== projectId));
     } catch (err) {
       console.error(err);

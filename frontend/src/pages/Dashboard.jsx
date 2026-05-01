@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { AuthContext } from '../context/AuthContext';
 import { CheckCircle, Clock, AlertTriangle, ListTodo } from 'lucide-react';
 
@@ -14,7 +14,7 @@ const Dashboard = () => {
 
   const fetchDashboard = async () => {
     try {
-      const res = await axios.get('http://127.0.0.1:5000/api/my-dashboard');
+      const res = await api.get('/api/my-dashboard');
       setData(res.data);
     } catch (err) {
       console.error('Error fetching dashboard data:', err);
